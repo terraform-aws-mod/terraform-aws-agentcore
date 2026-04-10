@@ -1,0 +1,3 @@
+# Ignore ECR mutable tags warning for test environment
+# Development/test uses MUTABLE for convenience; production should use IMMUTABLE (module default)
+AWS-0031

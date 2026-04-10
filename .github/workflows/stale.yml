@@ -1,0 +1,60 @@
+name: Mark Stale Issues and PRs
+
+on:
+  schedule:
+    - cron: "0 1 * * *"  # Run daily at 1 AM UTC
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          # Issue configuration
+          days-before-issue-stale: 60
+          days-before-issue-close: 14
+          stale-issue-label: stale
+          stale-issue-message: |
+            This issue has been automatically marked as stale because it has not had recent activity.
+            It will be closed in 14 days if no further activity occurs.
+            If this issue is still relevant, please comment to keep it open.
+          close-issue-message: |
+            This issue was automatically closed because it has been inactive for too long.
+            Please open a new issue if you still need assistance.
+
+          # PR configuration
+          days-before-pr-stale: 30
+          days-before-pr-close: 14
+          stale-pr-label: stale
+          stale-pr-message: |
+            This pull request has been automatically marked as stale because it has not had recent activity.
+            It will be closed in 14 days if no further activity occurs.
+            If this PR is still relevant, please comment or push updates to keep it open.
+          close-pr-message: |
+            This pull request was automatically closed because it has been inactive for too long.
+            Please open a new PR if you wish to continue this work.
+
+          # Labels that exempt from stale process
+          exempt-issue-labels: |
+            pinned
+            security
+            enhancement
+            help wanted
+          exempt-pr-labels: |
+            pinned
+            security
+            work-in-progress
+
+          # Only process a limited number per run to avoid rate limits
+          operations-per-run: 100
+
+          # Remove stale label when updated
+          remove-stale-when-updated: true
+
+          # Don't close issues/PRs with these labels
+          exempt-all-milestones: true

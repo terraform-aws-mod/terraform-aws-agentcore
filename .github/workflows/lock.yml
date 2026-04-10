@@ -1,0 +1,28 @@
+name: Lock Closed Issues and PRs
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Run daily at midnight UTC
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  lock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dessant/lock-threads@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-inactive-days: 30
+          issue-lock-reason: resolved
+          issue-comment: |
+            This issue has been automatically locked since there has been no activity for 30 days.
+            Please open a new issue if you have a related question or concern.
+          pr-inactive-days: 30
+          pr-lock-reason: resolved
+          pr-comment: |
+            This pull request has been automatically locked since there has been no activity for 30 days.
+            Please open a new issue or PR if you have a related question or concern.
