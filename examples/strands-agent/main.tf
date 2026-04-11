@@ -5,12 +5,12 @@ provider "aws" {
 }
 
 locals {
-  dockerfile_path = "${path.module}/../Dockerfile"
-  context_path    = "${path.module}/.."
+  dockerfile_path = "${path.module}/Dockerfile"
+  context_path    = path.module
 }
 
 module "agentcore" {
-  source = "../../../"
+  source = "../../"
 
   # Runtime identification
   agent_runtime_name  = var.agent_name
