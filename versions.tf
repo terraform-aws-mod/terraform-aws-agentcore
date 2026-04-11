@@ -7,6 +7,10 @@ terraform {
       source  = "hashicorp/aws"
       version = ">= 6.34"
     }
+    awscc = {
+      source  = "hashicorp/awscc"
+      version = ">= 1.79.0"
+    }
   }
 
   # provider_meta "aws" {

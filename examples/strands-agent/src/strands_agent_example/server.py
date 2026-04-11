@@ -39,7 +39,7 @@ def handle_message(payload: dict[str, Any]) -> str:
         message = payload.get("input", {}).get("prompt", "") if isinstance(payload.get("input"), dict) else ""
         if not message:
             message = payload.get("prompt", "")
-    
+
     if not message:
         logger.warning(f"No message found in payload: {payload}")
         return "Error: No message provided in payload. Expected format: {'message': 'your message'}"

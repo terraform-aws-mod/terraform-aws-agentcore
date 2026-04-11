@@ -95,6 +95,13 @@ resource "aws_bedrockagentcore_agent_runtime" "this" {
   description        = var.runtime_description
   role_arn           = local.effective_iam_role_arn
 
+  lifecycle {
+    precondition {
+      condition     = var.create_iam_role || (var.iam_role_arn != null && length(trim(var.iam_role_arn, " ")) > 0)
+      error_message = "iam_role_arn must be provided when create_iam_role is false."
+    }
+  }
+
   agent_runtime_artifact {
     container_configuration {
       container_uri = var.container_image_uri

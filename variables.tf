@@ -320,7 +320,7 @@ variable "ecr_build_script_path" {
 variable "ecr_build_script_args" {
   description = <<-EOT
     Arguments to pass to the build script as a map. Each key-value pair becomes a CLI argument.
-    For the built-in script, supported keys: dockerfile, context, tags (comma-separated), 
+    For the built-in script, supported keys: dockerfile, context, tags (comma-separated),
     build_args (comma-separated KEY=VALUE), platform, use_cache, provenance.
     For custom scripts, define your own argument structure.
   EOT
@@ -372,11 +372,6 @@ variable "iam_role_arn" {
   description = "Existing IAM role ARN when create_iam_role is false."
   type        = string
   default     = null
-
-  validation {
-    condition     = var.create_iam_role || (var.iam_role_arn != null && length(trim(var.iam_role_arn, " ")) > 0)
-    error_message = "iam_role_arn must be set when create_iam_role is false."
-  }
 }
 
 variable "iam_role_name" {
@@ -456,15 +451,15 @@ variable "aws_account_id" {
 variable "enable_bedrock_model_access" {
   description = <<-EOT
     Whether to allow Bedrock model invocation permissions on the execution role.
-    
+
     Set to true if your agent code needs to invoke Bedrock foundation models
     (e.g., Claude, Titan) using bedrock:InvokeModel, bedrock:Converse, or their streaming variants.
-    
+
     Set to false (default) if:
     - Your agent uses external AI providers (OpenAI, Google, Anthropic API directly)
     - Your agent doesn't call any AI models
     - You're providing a custom IAM role with Bedrock permissions already attached
-    
+
     This is disabled by default for least-privilege security.
   EOT
   type        = bool

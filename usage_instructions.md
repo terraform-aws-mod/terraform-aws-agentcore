@@ -22,7 +22,7 @@ aws --version
    ```bash
    # Configure AWS credentials
    aws configure
-   
+
    # Or use environment variables
    export AWS_ACCESS_KEY_ID="your-access-key"
    export AWS_SECRET_ACCESS_KEY="your-secret-key"
@@ -65,7 +65,7 @@ provider "aws" {
 }
 
 module "agentcore" {
-  source = "/path/to/terraform-aws-agentcore"
+  source = "AliMassoud/agentcore/aws"
 
   # Required
   agent_runtime_name  = "test-agentcore-runtime"
@@ -175,7 +175,7 @@ data "aws_subnets" "default" {
 }
 
 module "agentcore" {
-  source = "/path/to/terraform-aws-agentcore"
+  source = "AliMassoud/agentcore/aws"
 
   agent_runtime_name  = "test-vpc-agentcore"
   container_image_uri = "public.ecr.aws/amazonlinux/amazonlinux:2023"
@@ -214,7 +214,7 @@ output "security_group_id" {
 
 ```hcl
 module "agentcore" {
-  source = "/path/to/terraform-aws-agentcore"
+  source = "AliMassoud/agentcore/aws"
 
   agent_runtime_name  = "test-build-agentcore"
   container_image_uri = "placeholder:latest"  # Will be overridden by built image
@@ -262,7 +262,7 @@ While the root module is the recommended way to use this module, you can also us
 
 ```hcl
 module "ecr_only" {
-  source = "/path/to/terraform-aws-agentcore/_modules/ecr"
+  source = "AliMassoud/agentcore/aws//_modules/ecr"
 
   repository_name = "test-ecr-standalone"
   force_delete    = true
@@ -282,7 +282,7 @@ module "ecr_only" {
 data "aws_caller_identity" "current" {}
 
 module "iam_only" {
-  source = "/path/to/terraform-aws-agentcore/_modules/iam"
+  source = "AliMassoud/agentcore/aws//_modules/iam"
 
   role_name                   = "test-agentcore-role"
   aws_account_id              = data.aws_caller_identity.current.account_id

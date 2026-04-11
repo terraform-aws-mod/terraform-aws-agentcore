@@ -122,7 +122,7 @@ Set `enable_bedrock_model_access = false` (default) if:
 
 ```hcl
 module "agentcore" {
-  source  = "your-org/agentcore/aws"
+  source  = "AliMassoud/agentcore/aws"
   version = "~> 1.0"
 
   agent_runtime_name  = "my-agent"
@@ -150,7 +150,7 @@ module "agentcore" {
 
 ```hcl
 module "agentcore" {
-  source  = "your-org/agentcore/aws"
+  source  = "AliMassoud/agentcore/aws"
   version = "~> 1.0"
 
   agent_runtime_name  = "my-vpc-agent"
@@ -178,7 +178,7 @@ module "agentcore" {
 
 ```hcl
 module "agentcore" {
-  source  = "your-org/agentcore/aws"
+  source  = "AliMassoud/agentcore/aws"
   version = "~> 1.0"
 
   agent_runtime_name  = "my-agent"
@@ -199,7 +199,7 @@ Your custom role must include:
 
 ```hcl
 module "agentcore" {
-  source  = "your-org/agentcore/aws"
+  source  = "AliMassoud/agentcore/aws"
   version = "~> 1.0"
 
   agent_runtime_name  = "my-agent"
@@ -224,9 +224,17 @@ module "agentcore" {
 
 ### ECR with Docker Image Build
 
+> **Cross-platform builds:** AWS AgentCore runtime requires `linux/arm64` images. If you are building on an `amd64`/`x86_64` host, you must enable QEMU user-space emulation before running `terraform apply`:
+>
+> ```bash
+> docker run --privileged --rm tonistiigi/binfmt --install all
+> ```
+>
+> This registration is **not persistent** across Docker daemon restarts or system reboots. If you encounter `exec format error` during builds, re-run the command above.
+
 ```hcl
 module "agentcore" {
-  source  = "your-org/agentcore/aws"
+  source  = "AliMassoud/agentcore/aws"
   version = "~> 1.0"
 
   agent_runtime_name  = "my-agent"
@@ -376,4 +384,4 @@ Module is maintained by Ali MASSOUD.
 contributions from the community are welcome! Please open issues or submit pull requests for improvements.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.

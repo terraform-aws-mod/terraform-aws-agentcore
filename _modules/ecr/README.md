@@ -8,7 +8,7 @@ Terraform module for creating AWS ECR repositories with lifecycle policies, KMS 
 
 ```hcl
 module "ecr" {
-  source = "./_modules/ecr"
+  source = "AliMassoud/agentcore/aws//_modules/ecr"
 
   repository_name = "my-agent"
 
@@ -70,6 +70,16 @@ module "ecr" {
 | kms_key_id | KMS key ID when created by this module |
 | image_uri | Full image URI including the first tag |
 | image_pushed | Indicates whether the image has been built |
+
+## Cross-Platform Builds
+
+When building images with a target platform different from the host (e.g., `linux/arm64` on an `amd64` host), you must enable QEMU user-space emulation:
+
+```bash
+docker run --privileged --rm tonistiigi/binfmt --install all
+```
+
+> **Note:** QEMU binfmt registrations are **not persistent** across Docker daemon restarts or system reboots. If you encounter `exec format error` during builds, re-run the command above.
 
 ## Security
 

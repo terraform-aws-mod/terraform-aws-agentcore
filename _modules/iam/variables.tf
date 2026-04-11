@@ -117,15 +117,15 @@ variable "ecr_repository_arns" {
 variable "enable_bedrock_model_access" {
   description = <<-EOT
     Whether to include Bedrock model invocation permissions.
-    
+
     Set to true if your agent code needs to invoke Bedrock foundation models
     (e.g., Claude, Titan) using bedrock:InvokeModel, bedrock:Converse, or their streaming variants.
-    
+
     Set to false (default) if:
     - Your agent uses external AI providers (OpenAI, Google, Anthropic API directly)
     - Your agent doesn't call any AI models
     - You're providing a custom IAM role with Bedrock permissions already attached
-    
+
     This is disabled by default for least-privilege security.
   EOT
   type        = bool
@@ -168,7 +168,7 @@ variable "inline_policy_statements" {
   description = <<-EOT
     Custom inline IAM policy statements to add to the role.
     Use this for any additional AWS service permissions your agent needs.
-    
+
     Example for S3 access:
     inline_policy_statements = [
       {
@@ -197,7 +197,7 @@ variable "iam_additional_policies" {
   description = <<-EOT
     Additional managed policy ARNs to attach to the role.
     Use this to attach AWS managed policies or your own managed policies.
-    
+
     Example:
     iam_additional_policies = [
       "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
