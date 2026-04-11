@@ -57,7 +57,7 @@ module "agentcore" {
   subnet_ids   = local.subnet_ids
 
   # Security Group - let the module create one
-  # Note: Using empty list (default) for least-privilege. 
+  # Note: Using empty list (default) for least-privilege.
   # Add specific egress rules if your agent needs outbound access.
   create_security_group      = true
   security_group_description = "AgentCore runtime security group for ${var.agent_runtime_name}"

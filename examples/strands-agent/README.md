@@ -1,6 +1,6 @@
 # Strands Agent Example for AWS AgentCore
 
-A simple AI agent built with [Strands Agents](https://github.com/strands-agents/strands-agents) 
+A simple AI agent built with [Strands Agents](https://github.com/strands-agents/strands-agents)
 framework, ready to deploy on AWS AgentCore runtime using `BedrockAgentCoreApp`.
 
 ## Features

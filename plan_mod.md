@@ -95,7 +95,7 @@ Production-grade Terraform module for AWS Bedrock AgentCore runtime with full su
 ### 2.1 Variable Organization
 Create variable groups with clear prefixes:
 - `ecr_*` - All ECR-related variables
-- `iam_*` - All IAM-related variables  
+- `iam_*` - All IAM-related variables
 - `sg_*` - All Security Group variables
 - `runtime_*` - All AgentCore runtime variables
 - Top-level: `agent_runtime_name`, `tags`, `network_mode`

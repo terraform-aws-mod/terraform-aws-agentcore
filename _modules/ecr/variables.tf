@@ -204,7 +204,7 @@ variable "build_script_path" {
 variable "build_script_args" {
   description = <<-EOT
     Arguments to pass to the build script as a map. Each key-value pair becomes a CLI argument.
-    For the built-in script, supported keys: dockerfile, context, tags (comma-separated), 
+    For the built-in script, supported keys: dockerfile, context, tags (comma-separated),
     build_args (comma-separated KEY=VALUE), platform, use_cache, provenance.
     For custom scripts, define your own argument structure.
   EOT

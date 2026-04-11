@@ -49,3 +49,4 @@ ENV/
 # Ignore specific files
 .github/skills/terraform-aws-agentcore-module/SKILL.md
 AGENTS.md
+plan_mod.md

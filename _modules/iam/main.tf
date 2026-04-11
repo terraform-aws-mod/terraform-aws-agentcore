@@ -1,5 +1,5 @@
 # Purpose: Provision execution IAM role, trust policy, inline policies, and managed policy attachments.
-# 
+#
 # This module provides the minimal IAM permissions required for AgentCore:
 # - Trust policy for bedrock-agentcore.amazonaws.com
 # - ECR pull permissions (if ECR repository ARN provided)
