@@ -8,7 +8,7 @@ Terraform module for creating least-privilege security groups for AWS Bedrock Ag
 
 ```hcl
 module "security_group" {
-  source = "./_modules/security_group"
+  source = "AliMassoud/agentcore/aws//_modules/security_group"
 
   security_group_name = "agentcore-sg"
   vpc_id              = "vpc-xxx"

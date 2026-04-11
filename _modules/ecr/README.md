@@ -8,7 +8,7 @@ Terraform module for creating AWS ECR repositories with lifecycle policies, KMS 
 
 ```hcl
 module "ecr" {
-  source = "./_modules/ecr"
+  source = "AliMassoud/agentcore/aws//_modules/ecr"
 
   repository_name = "my-agent"
 

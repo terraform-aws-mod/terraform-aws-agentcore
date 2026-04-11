@@ -8,7 +8,7 @@ Terraform module for creating IAM execution roles for AWS Bedrock AgentCore with
 
 ```hcl
 module "iam" {
-  source = "./_modules/iam"
+  source = "AliMassoud/agentcore/aws//_modules/iam"
 
   role_name       = "agentcore-execution"
   aws_account_id  = "123456789012"

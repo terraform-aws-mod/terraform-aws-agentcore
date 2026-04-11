@@ -103,7 +103,7 @@ The terraform-aws-agentcore module supports **object variables** for flexible co
 
 ```hcl
 module "agentcore" {
-  source = "../../../"
+  source = "AliMassoud/agentcore/aws"
 
   # ... required variables ...
 

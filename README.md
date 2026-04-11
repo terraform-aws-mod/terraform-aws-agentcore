@@ -122,7 +122,7 @@ Set `enable_bedrock_model_access = false` (default) if:
 
 ```hcl
 module "agentcore" {
-  source  = "your-org/agentcore/aws"
+  source  = "AliMassoud/agentcore/aws"
   version = "~> 1.0"
 
   agent_runtime_name  = "my-agent"
@@ -150,7 +150,7 @@ module "agentcore" {
 
 ```hcl
 module "agentcore" {
-  source  = "your-org/agentcore/aws"
+  source  = "AliMassoud/agentcore/aws"
   version = "~> 1.0"
 
   agent_runtime_name  = "my-vpc-agent"
@@ -178,7 +178,7 @@ module "agentcore" {
 
 ```hcl
 module "agentcore" {
-  source  = "your-org/agentcore/aws"
+  source  = "AliMassoud/agentcore/aws"
   version = "~> 1.0"
 
   agent_runtime_name  = "my-agent"
@@ -199,7 +199,7 @@ Your custom role must include:
 
 ```hcl
 module "agentcore" {
-  source  = "your-org/agentcore/aws"
+  source  = "AliMassoud/agentcore/aws"
   version = "~> 1.0"
 
   agent_runtime_name  = "my-agent"
@@ -226,7 +226,7 @@ module "agentcore" {
 
 ```hcl
 module "agentcore" {
-  source  = "your-org/agentcore/aws"
+  source  = "AliMassoud/agentcore/aws"
   version = "~> 1.0"
 
   agent_runtime_name  = "my-agent"
@@ -376,4 +376,4 @@ Module is maintained by Ali MASSOUD.
 contributions from the community are welcome! Please open issues or submit pull requests for improvements.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
