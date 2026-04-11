@@ -224,6 +224,14 @@ module "agentcore" {
 
 ### ECR with Docker Image Build
 
+> **Cross-platform builds:** AWS AgentCore runtime requires `linux/arm64` images. If you are building on an `amd64`/`x86_64` host, you must enable QEMU user-space emulation before running `terraform apply`:
+>
+> ```bash
+> docker run --privileged --rm tonistiigi/binfmt --install all
+> ```
+>
+> This registration is **not persistent** across Docker daemon restarts or system reboots. If you encounter `exec format error` during builds, re-run the command above.
+
 ```hcl
 module "agentcore" {
   source  = "AliMassoud/agentcore/aws"

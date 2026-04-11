@@ -71,6 +71,16 @@ module "ecr" {
 | image_uri | Full image URI including the first tag |
 | image_pushed | Indicates whether the image has been built |
 
+## Cross-Platform Builds
+
+When building images with a target platform different from the host (e.g., `linux/arm64` on an `amd64` host), you must enable QEMU user-space emulation:
+
+```bash
+docker run --privileged --rm tonistiigi/binfmt --install all
+```
+
+> **Note:** QEMU binfmt registrations are **not persistent** across Docker daemon restarts or system reboots. If you encounter `exec format error` during builds, re-run the command above.
+
 ## Security
 
 - Image tag mutability is set to `IMMUTABLE` to prevent tag overwriting

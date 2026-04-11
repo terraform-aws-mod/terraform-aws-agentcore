@@ -65,6 +65,13 @@ python -m strands_agent_example.server
 - AWS CLI configured with appropriate permissions
 - Terraform >= 1.5.0
 - Docker (for image builds)
+- **QEMU** (for cross-platform builds) - AWS AgentCore runtime requires `linux/arm64` images. If you are building on an `amd64`/`x86_64` host, you must enable QEMU user-space emulation:
+
+  ```bash
+  docker run --privileged --rm tonistiigi/binfmt --install all
+  ```
+
+  > **Note:** QEMU binfmt registrations are **not persistent** across Docker daemon restarts or system reboots. If you encounter `exec format error` during builds, re-run the command above.
 
 ### Deploy
 
