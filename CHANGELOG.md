@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.1](https://github.com/terraform-aws-mod/terraform-aws-agentcore/compare/v1.0.0...v1.0.1) (2026-04-12)
+
+### Bug Fixes
+
+* file structure + READMEs ([767e3d4](https://github.com/terraform-aws-mod/terraform-aws-agentcore/commit/767e3d41fd8dc0d56f57bbbab65e2776aee610a6))
+* fix READMEs ([2cd6ee5](https://github.com/terraform-aws-mod/terraform-aws-agentcore/commit/2cd6ee564f4eaaa6bff68e45feaf906b4c9e2337))
+
 ## 1.0.0 (2026-04-11)
 
 ### Features
