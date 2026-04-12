@@ -4,28 +4,6 @@
 
 Terraform module for creating AWS ECR repositories with lifecycle policies, KMS encryption, and optional Docker image build/push capability.
 
-## Usage
-
-```hcl
-module "ecr" {
-  source = "AliMassoud/agentcore/aws//_modules/ecr"
-
-  repository_name = "my-agent"
-
-  # Optional: Build and push image
-  build_image = true
-  build_script_args = {
-    dockerfile = "./Dockerfile"
-    context    = "."
-    tags       = "latest,v1.0.0"
-  }
-
-  tags = {
-    Environment = "production"
-  }
-}
-```
-
 ## Requirements
 
 | Name | Version |

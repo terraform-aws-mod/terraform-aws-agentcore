@@ -3,11 +3,11 @@ module "wrapper" {
 
   for_each = var.items
 
-  agent_runtime_name               = try(each.value.agent_runtime_name, var.defaults.agent_runtime_name)
+  agent_runtime_name               = try(each.value.agent_runtime_name, var.defaults.agent_runtime_name, "agentcore_runtime")
   authorizer_configuration         = try(each.value.authorizer_configuration, var.defaults.authorizer_configuration, null)
   aws_account_id                   = try(each.value.aws_account_id, var.defaults.aws_account_id, null)
   bedrock_model_arns               = try(each.value.bedrock_model_arns, var.defaults.bedrock_model_arns, [])
-  container_image_uri              = try(each.value.container_image_uri, var.defaults.container_image_uri)
+  container_image_uri              = try(each.value.container_image_uri, var.defaults.container_image_uri, "public.ecr.aws/bedrock-agentcore/runtime:latest")
   create_ecr_kms_key               = try(each.value.create_ecr_kms_key, var.defaults.create_ecr_kms_key, false)
   create_ecr_repository            = try(each.value.create_ecr_repository, var.defaults.create_ecr_repository, true)
   create_iam_role                  = try(each.value.create_iam_role, var.defaults.create_iam_role, true)
