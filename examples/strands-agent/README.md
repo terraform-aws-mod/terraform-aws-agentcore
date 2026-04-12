@@ -89,7 +89,7 @@ locals {
 }
 
 module "agentcore" {
-  source = "AliMassoud/agentcore/aws"
+  source = "terraform-aws-mod/agentcore/aws"
 
   # Runtime identification
   agent_runtime_name  = var.agent_name
@@ -184,7 +184,7 @@ The terraform-aws-agentcore module supports **object variables** for flexible co
 
 ```hcl
 module "agentcore" {
-  source = "AliMassoud/agentcore/aws"
+  source = "terraform-aws-mod/agentcore/aws"
 
   # ... required variables ...
 

@@ -9,7 +9,7 @@ This guide walks you through testing the AgentCore Terraform module on your AWS 
 ### Required Tools
 
 ```bash
-# Terraform >= 1.3
+# Terraform >= 1.5
 terraform version
 
 # AWS CLI v2
@@ -65,7 +65,7 @@ provider "aws" {
 }
 
 module "agentcore" {
-  source = "AliMassoud/agentcore/aws"
+  source = "terraform-aws-mod/agentcore/aws"
 
   # Required
   agent_runtime_name  = "test-agentcore-runtime"
@@ -175,7 +175,7 @@ data "aws_subnets" "default" {
 }
 
 module "agentcore" {
-  source = "AliMassoud/agentcore/aws"
+  source = "terraform-aws-mod/agentcore/aws"
 
   agent_runtime_name  = "test-vpc-agentcore"
   container_image_uri = "public.ecr.aws/amazonlinux/amazonlinux:2023"
@@ -214,7 +214,7 @@ output "security_group_id" {
 
 ```hcl
 module "agentcore" {
-  source = "AliMassoud/agentcore/aws"
+  source = "terraform-aws-mod/agentcore/aws"
 
   agent_runtime_name  = "test-build-agentcore"
   container_image_uri = "placeholder:latest"  # Will be overridden by built image
@@ -249,48 +249,6 @@ module "agentcore" {
 
 output "ecr_image_uri" {
   value = module.agentcore.ecr_image_uri
-}
-```
-
----
-
-## Using Internal Submodules Directly
-
-While the root module is the recommended way to use this module, you can also use the internal submodules directly for specific use cases.
-
-### ECR Only
-
-```hcl
-module "ecr_only" {
-  source = "AliMassoud/agentcore/aws//_modules/ecr"
-
-  repository_name = "test-ecr-standalone"
-  force_delete    = true
-
-  # No execution role - skip repository policy
-  create_repository_policy = false
-
-  tags = {
-    Test = "ecr-only"
-  }
-}
-```
-
-### IAM Only
-
-```hcl
-data "aws_caller_identity" "current" {}
-
-module "iam_only" {
-  source = "AliMassoud/agentcore/aws//_modules/iam"
-
-  role_name                   = "test-agentcore-role"
-  aws_account_id              = data.aws_caller_identity.current.account_id
-  enable_bedrock_model_access = true
-
-  tags = {
-    Test = "iam-only"
-  }
 }
 ```
 

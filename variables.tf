@@ -1,12 +1,13 @@
 # Purpose: Declare all root module inputs, defaults, and validation rules.
 
 ################################################################################
-# Required Variables
+# Core Variables
 ################################################################################
 
 variable "agent_runtime_name" {
   description = "Name of the Bedrock AgentCore runtime. Must start with a letter and contain only letters, numbers, and underscores (max 48 chars)."
   type        = string
+  default     = "agentcore_runtime"
 
   validation {
     condition     = can(regex("^[a-zA-Z][a-zA-Z0-9_]{0,47}$", var.agent_runtime_name))
@@ -17,6 +18,7 @@ variable "agent_runtime_name" {
 variable "container_image_uri" {
   description = "Full container image URI for the runtime artifact (typically ECR URI)."
   type        = string
+  default     = "public.ecr.aws/bedrock-agentcore/runtime:latest"
 
   validation {
     condition     = length(trim(var.container_image_uri, " ")) > 0
