@@ -5,10 +5,11 @@
 ################################################################################
 
 module "iam" {
-  source = "./_modules/iam"
+  source = "./modules/iam"
   count  = var.create_iam_role ? 1 : 0
 
   create                      = true
+  agent_runtime_name          = var.agent_runtime_name
   role_name                   = coalesce(var.iam_role_name, "${var.agent_runtime_name}-execution")
   role_path                   = var.iam_role_path
   role_description            = var.iam_role_description
@@ -32,7 +33,7 @@ module "iam" {
 ################################################################################
 
 module "ecr" {
-  source = "./_modules/ecr"
+  source = "./modules/ecr"
   count  = var.create_ecr_repository ? 1 : 0
 
   create                            = true
@@ -69,7 +70,7 @@ module "ecr" {
 ################################################################################
 
 module "security_group" {
-  source = "./_modules/security_group"
+  source = "./modules/security_group"
   count  = local.create_security_group_effective ? 1 : 0
 
   create                   = true
@@ -84,6 +85,27 @@ module "security_group" {
   additional_ingress_rules = var.security_group_ingress_rules
   additional_egress_rules  = var.security_group_egress_rules
   tags                     = local.merged_tags
+}
+
+################################################################################
+# Memory Module
+################################################################################
+
+module "memory" {
+  source = "./modules/memory"
+  count  = var.create_memory ? 1 : 0
+
+  create                       = true
+  memory_name                  = coalesce(var.memory_name, var.agent_runtime_name)
+  description                  = var.memory_description
+  event_expiry_duration        = var.memory_event_expiry_duration
+  encryption_key_arn           = var.memory_encryption_key_arn
+  memory_execution_role_arn    = var.memory_execution_role_arn
+  create_kms_key               = var.create_memory_kms_key
+  kms_key_deletion_window_days = var.memory_kms_key_deletion_window_days
+  kms_key_enable_rotation      = var.memory_kms_key_enable_rotation
+  timeouts                     = var.memory_timeouts
+  tags                         = local.merged_tags
 }
 
 ################################################################################

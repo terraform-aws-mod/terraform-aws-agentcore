@@ -82,6 +82,11 @@ variable "aws_account_id" {
   type        = string
 }
 
+variable "agent_runtime_name" {
+  description = "Name of the AgentCore runtime. Used to scope CloudWatch Logs permissions to this specific runtime."
+  type        = string
+}
+
 variable "trusted_role_arns" {
   description = "Additional IAM role ARNs allowed to assume this role."
   type        = list(string)
@@ -201,7 +206,7 @@ variable "iam_additional_policies" {
     Example:
     iam_additional_policies = [
       "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
-      "arn:aws:iam::123456789012:policy/my-custom-policy"
+      "arn:aws:iam::<ACCOUNT_ID>:policy/my-custom-policy"
     ]
   EOT
   type        = list(string)

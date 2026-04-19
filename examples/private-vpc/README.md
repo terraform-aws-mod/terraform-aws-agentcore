@@ -38,5 +38,5 @@ terraform destroy
 
 ## Notes
 
-- This example consumes the published module address: `terraform-aws-mod/agentcore/aws`.
+- This example uses a relative path to the root module: `../../`.
 - Ensure the selected VPC has at least two usable subnets when running in VPC mode.

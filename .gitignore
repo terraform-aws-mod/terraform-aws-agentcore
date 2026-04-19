@@ -47,6 +47,9 @@ ENV/
 
 
 # Ignore specific files
-.github/skills/terraform-aws-agentcore-module/SKILL.md
+.claude/
 AGENTS.md
 plan_mod.md
+
+# uv
+uv.lock

@@ -33,7 +33,7 @@ jobs:
         directory: ${{ fromJson(needs.collectInputs.outputs.directories) }}
     steps:
       - name: Install rmz
-        uses: jaxxstorm/action-install-gh-release@v2.1.0
+        uses: jaxxstorm/action-install-gh-release@v3.0.0
         with:
           repo: SUPERCILEX/fuc
           asset-name: x86_64-unknown-linux-gnu-rmz
@@ -92,7 +92,7 @@ jobs:
     needs: collectInputs
     steps:
       - name: Install rmz
-        uses: jaxxstorm/action-install-gh-release@v2.1.0
+        uses: jaxxstorm/action-install-gh-release@v3.0.0
         with:
           repo: SUPERCILEX/fuc
           asset-name: x86_64-unknown-linux-gnu-rmz

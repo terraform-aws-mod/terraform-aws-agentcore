@@ -17,17 +17,19 @@ locals {
 
   merged_tags = merge(var.tags, local.default_tags)
 
-  # CloudWatch Logs ARNs for AgentCore - scoped to specific account and region (least privilege)
+  # CloudWatch Logs ARNs for AgentCore - scoped to this specific runtime only
   agentcore_logs_arns = [
-    format("arn:%s:logs:%s:%s:log-group:/aws/bedrock-agentcore/*",
+    format("arn:%s:logs:%s:%s:log-group:/aws/bedrock-agentcore/%s",
       data.aws_partition.current.partition,
       data.aws_region.current.id,
-      var.aws_account_id
+      var.aws_account_id,
+      var.agent_runtime_name
     ),
-    format("arn:%s:logs:%s:%s:log-group:/aws/bedrock-agentcore/*:*",
+    format("arn:%s:logs:%s:%s:log-group:/aws/bedrock-agentcore/%s:*",
       data.aws_partition.current.partition,
       data.aws_region.current.id,
-      var.aws_account_id
+      var.aws_account_id,
+      var.agent_runtime_name
     )
   ]
 

@@ -4,6 +4,28 @@
 
 Terraform module for creating IAM execution roles for AWS Bedrock AgentCore with least-privilege permissions.
 
+## Usage
+
+```hcl
+module "iam" {
+  source = "../../modules/iam"
+
+  role_name       = "agentcore-execution"
+  aws_account_id  = "<ACCOUNT_ID>"
+  ecr_repository_arn = module.ecr.repository_arn
+
+  # Optional: Enable Bedrock model access
+  enable_bedrock_model_access = true
+
+  # Optional: Add secrets access
+  secret_arns = ["arn:aws:secretsmanager:us-east-1:<ACCOUNT_ID>:secret:my-secret"]
+
+  tags = {
+    Environment = "production"
+  }
+}
+```
+
 ## Requirements
 
 | Name | Version |

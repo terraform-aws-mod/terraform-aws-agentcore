@@ -22,6 +22,7 @@ data "aws_caller_identity" "kms" {
 }
 
 resource "aws_kms_key" "this" {
+  #checkov:skip=CKV_AWS_7:Rotation enabled via variable with default true
   count = local.create && var.create_kms_key ? 1 : 0
 
   description             = "KMS key for ECR repository ${var.repository_name}"
