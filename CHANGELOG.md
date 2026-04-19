@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/terraform-aws-mod/terraform-aws-agentcore/compare/v1.0.1...v1.1.0) (2026-04-19)
+
+### Features
+
+* add agentcore memory ([e3baaef](https://github.com/terraform-aws-mod/terraform-aws-agentcore/commit/e3baaef4fc41a671418d3e5ff904e7034f7b4468))
+
 ## [1.0.1](https://github.com/terraform-aws-mod/terraform-aws-agentcore/compare/v1.0.0...v1.0.1) (2026-04-12)
 
 ### Bug Fixes
