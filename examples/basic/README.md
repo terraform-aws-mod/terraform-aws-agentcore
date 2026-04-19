@@ -1,13 +1,16 @@
 # Basic Example - Public Network Mode
 
-This example demonstrates the minimal configuration for deploying an AWS Bedrock AgentCore runtime in PUBLIC network mode.
+This example demonstrates the minimal configuration for
+deploying an AWS Bedrock AgentCore runtime in PUBLIC
+network mode.
 
 ## Features Demonstrated
 
 - AgentCore runtime in PUBLIC network mode (no VPC required)
 - Module-managed ECR repository with lifecycle policies
 - Module-managed IAM execution role with Bedrock model access
-- **Object-based configuration** for image scanning and runtime lifecycle (recommended pattern)
+- **Object-based configuration** for image scanning and
+  runtime lifecycle (recommended pattern)
 - Default runtime lifecycle settings
 
 ## Usage
@@ -87,7 +90,11 @@ max_session_lifetime_seconds = 1800
 
 ## Notes
 
-- The default container image is a placeholder. Replace with your actual agent container image.
-- PUBLIC mode means the runtime has internet access without VPC configuration.
-- ECR repository is created with IMMUTABLE tags and scan-on-push enabled.
-- Object variables allow setting configuration to `null` to completely omit optional blocks.
+- The default container image is a placeholder. Replace
+  with your actual agent container image.
+- PUBLIC mode means the runtime has internet access without
+  VPC configuration.
+- ECR repository is created with IMMUTABLE tags and
+  scan-on-push enabled.
+- Object variables allow setting configuration to `null` to
+  completely omit optional blocks.

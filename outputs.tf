@@ -98,6 +98,30 @@ output "iam_role_path" {
 }
 
 ################################################################################
+# Memory Outputs
+################################################################################
+
+output "memory_arn" {
+  description = "ARN of the Bedrock AgentCore memory when created."
+  value       = var.create_memory ? module.memory[0].memory_arn : null
+}
+
+output "memory_id" {
+  description = "ID of the Bedrock AgentCore memory when created."
+  value       = var.create_memory ? module.memory[0].memory_id : null
+}
+
+output "memory_name" {
+  description = "Name of the Bedrock AgentCore memory when created."
+  value       = var.create_memory ? module.memory[0].memory_name : null
+}
+
+output "memory_kms_key_arn" {
+  description = "KMS key ARN for memory encryption when created."
+  value       = var.create_memory && var.create_memory_kms_key ? module.memory[0].kms_key_arn : null
+}
+
+################################################################################
 # Security Group Outputs
 ################################################################################
 

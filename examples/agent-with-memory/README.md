@@ -1,33 +1,37 @@
-# Strands Agent Example for AWS AgentCore
+# Memory Agent Example for AWS AgentCore
 
-A simple AI agent built with [Strands Agents](https://github.com/strands-agents/strands-agents)
-framework, ready to deploy on AWS AgentCore runtime using `BedrockAgentCoreApp`.
+A Strands AI agent with persistent memory, deployed on AWS
+AgentCore runtime using `BedrockAgentCoreApp` and the
+`aws_bedrockagentcore_memory` resource.
 
 ## Features
 
+- **AgentCore Memory** - Persistent memory resource for
+  retaining context across sessions
 - **AgentCore Native** - Uses `bedrock-agentcore` SDK for runtime compatibility
 - **Strands Agent** - Powered by Strands Agents framework with Bedrock models
 - **Custom Tools** - Calculator, current time, and echo tools
 - **Terraform Ready** - Deploy with the terraform-aws-agentcore module
-- **Object Variable Configuration** - Uses recommended dynamic block patterns
+- **Optional KMS Encryption** - Encrypt memory with a dedicated KMS key
 
 ## Project Structure
 
 ```text
-examples/strands-agent/
+examples/agent-with-memory/
 ├── src/
-│   └── strands_agent_example/
+│   └── memory_agent_example/
 │       ├── __init__.py
-│       ├── agent.py      # Strands agent with Bedrock model
+│       ├── agent.py      # Strands agent with memory-aware prompt
 │       ├── server.py     # BedrockAgentCoreApp handler
 │       └── tools.py      # Custom agent tools
 ├── terraform/
-│   ├── main.tf           # AgentCore module usage
+│   ├── main.tf           # AgentCore module with memory enabled
 │   ├── variables.tf      # Configuration variables
-│   ├── outputs.tf        # Output values
+│   ├── outputs.tf        # Output values (includes memory ARN/ID)
 │   └── versions.tf       # Provider versions
 ├── Dockerfile            # Container image definition
 ├── pyproject.toml        # Dependencies (uv managed)
+├── invoke_agent.py       # Agent invocation script
 └── README.md
 ```
 
@@ -55,7 +59,7 @@ export AWS_ACCESS_KEY_ID=your-key
 export AWS_SECRET_ACCESS_KEY=your-secret
 
 # Run the AgentCore server
-python -m strands_agent_example.server
+python -m memory_agent_example.server
 ```
 
 ## Deploy to AWS AgentCore
@@ -66,18 +70,11 @@ python -m strands_agent_example.server
 - Terraform >= 1.5.0
 - Docker (for image builds)
 - **QEMU** (for cross-platform builds) - AWS AgentCore
-  runtime requires `linux/arm64` images. If you are
-  building on an `amd64`/`x86_64` host, you must enable
-  QEMU user-space emulation:
+  runtime requires `linux/arm64` images:
 
   ```bash
   docker run --privileged --rm tonistiigi/binfmt --install all
   ```
-
-  > **Note:** QEMU binfmt registrations are **not
-  > persistent** across Docker daemon restarts or system
-  > reboots. If you encounter `exec format error` during
-  > builds, re-run the command above.
 
 ### Deploy
 
@@ -99,10 +96,14 @@ terraform apply
 Create a `terraform.tfvars` file:
 
 ```hcl
-agent_name       = "my_strands_agent"
+agent_name       = "my_memory_agent"
 aws_region       = "us-east-1"
 image_tag        = "v1.0.0"
 bedrock_model_id = "us.anthropic.claude-sonnet-4-20250514-v1:0"
+
+# Memory configuration
+memory_event_expiry_duration = 60   # Keep memory events for 60 days
+create_memory_kms_key        = true  # Encrypt memory with a dedicated KMS key
 
 # Optional: VPC mode
 network_mode = "VPC"
@@ -110,34 +111,16 @@ vpc_id       = "vpc-12345678"
 subnet_ids   = ["subnet-111", "subnet-222"]
 ```
 
-### Advanced Configuration with Object Variables
+### Key Differences from strands-agent Example
 
-The terraform-aws-agentcore module supports **object variables** for flexible configuration:
+This example adds:
 
-```hcl
-module "agentcore" {
-  source = "../../../"
-
-  # ... required variables ...
-
-  # ECR image scanning (set to null to disable)
-  ecr_image_scanning_configuration = {
-    scan_on_push = true
-  }
-
-  # ECR encryption (null = default AES256, or specify KMS)
-  ecr_encryption_configuration = {
-    encryption_type = "KMS"
-    kms_key         = "arn:aws:kms:us-east-1:<ACCOUNT_ID>:key/..."
-  }
-
-  # Runtime lifecycle (set to null to omit block)
-  runtime_lifecycle_configuration = {
-    idle_runtime_session_timeout = 600   # 10 minutes
-    max_lifetime                 = 7200  # 2 hours
-  }
-}
-```
+| Feature | strands-agent | agent-with-memory |
+|---------|---------------|--------------|
+| `create_memory` | No | Yes |
+| `memory_event_expiry_duration` | N/A | Configurable (default 30 days) |
+| `create_memory_kms_key` | N/A | Optional KMS encryption |
+| Memory outputs | N/A | `memory_arn`, `memory_id` |
 
 ### Cleanup
 
@@ -161,25 +144,11 @@ terraform destroy
 | `calculate` | Evaluates mathematical expressions safely |
 | `echo` | Echoes back messages (for testing) |
 
-## Configuration Reference
-
-### Object Variables
-
-| Variable | Description | Type |
-|----------|-------------|------|
-| `ecr_image_scanning_configuration` | Image scanning config object | `object({scan_on_push = bool})` |
-| `ecr_encryption_configuration` | Encryption config object | `object({encryption_type = string, kms_key = optional(string)})` |
-| `runtime_lifecycle_configuration` | Runtime lifecycle object | `object({idle_runtime_session_timeout = number, max_lifetime = number})` |
-
-Set any of these to `null` to omit the corresponding configuration block entirely.
-
 ## Authors
 
 Module is maintained by Ali MASSOUD.
-contributions from the community are welcome! Please open
-issues or submit pull requests for improvements.
 
 ## License
 
-This project is licensed under the MIT License - see the
-[LICENSE](../../LICENSE) file for details.
+This project is licensed under the Apache License 2.0 -
+see the [LICENSE](../../LICENSE) file for details.

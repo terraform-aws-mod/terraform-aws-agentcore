@@ -1,6 +1,7 @@
 # Usage Instructions - Testing terraform-aws-agentcore Module
 
-This guide walks you through testing the AgentCore Terraform module on your AWS account.
+This guide walks you through testing the AgentCore Terraform
+module on your AWS account.
 
 ---
 
@@ -9,7 +10,7 @@ This guide walks you through testing the AgentCore Terraform module on your AWS 
 ### Required Tools
 
 ```bash
-# Terraform >= 1.5
+# Terraform >= 1.3
 terraform version
 
 # AWS CLI v2
@@ -19,6 +20,7 @@ aws --version
 ### AWS Account Setup
 
 1. **AWS CLI Configuration**
+
    ```bash
    # Configure AWS credentials
    aws configure
@@ -30,6 +32,7 @@ aws --version
    ```
 
 2. **Verify Access**
+
    ```bash
    # Check your identity
    aws sts get-caller-identity
@@ -65,7 +68,7 @@ provider "aws" {
 }
 
 module "agentcore" {
-  source = "terraform-aws-mod/agentcore/aws"
+  source = "../../"
 
   # Required
   agent_runtime_name  = "test-agentcore-runtime"
@@ -175,7 +178,7 @@ data "aws_subnets" "default" {
 }
 
 module "agentcore" {
-  source = "terraform-aws-mod/agentcore/aws"
+  source = "../../"
 
   agent_runtime_name  = "test-vpc-agentcore"
   container_image_uri = "public.ecr.aws/amazonlinux/amazonlinux:2023"
@@ -214,7 +217,7 @@ output "security_group_id" {
 
 ```hcl
 module "agentcore" {
-  source = "terraform-aws-mod/agentcore/aws"
+  source = "../../"
 
   agent_runtime_name  = "test-build-agentcore"
   container_image_uri = "placeholder:latest"  # Will be overridden by built image
@@ -249,6 +252,50 @@ module "agentcore" {
 
 output "ecr_image_uri" {
   value = module.agentcore.ecr_image_uri
+}
+```
+
+---
+
+## Using Internal Submodules Directly
+
+While the root module is the recommended way to use this
+module, you can also use the internal submodules directly
+for specific use cases.
+
+### ECR Only
+
+```hcl
+module "ecr_only" {
+  source = "../../modules/ecr"
+
+  repository_name = "test-ecr-standalone"
+  force_delete    = true
+
+  # No execution role - skip repository policy
+  create_repository_policy = false
+
+  tags = {
+    Test = "ecr-only"
+  }
+}
+```
+
+### IAM Only
+
+```hcl
+data "aws_caller_identity" "current" {}
+
+module "iam_only" {
+  source = "../../modules/iam"
+
+  role_name                   = "test-agentcore-role"
+  aws_account_id              = data.aws_caller_identity.current.account_id
+  enable_bedrock_model_access = true
+
+  tags = {
+    Test = "iam-only"
+  }
 }
 ```
 
@@ -323,6 +370,7 @@ aws bedrock-agentcore list-agent-runtimes
 ## Resource Costs
 
 **Estimated costs for testing:**
+
 - ECR Repository: Free (storage costs ~$0.10/GB/month)
 - IAM Role: Free
 - Security Group: Free
@@ -335,6 +383,7 @@ aws bedrock-agentcore list-agent-runtimes
 ## Next Steps
 
 After successful testing:
+
 1. Review the `examples/` directory for more use cases
 2. Customize variables for your production requirements
 3. Set up CI/CD with the provided GitHub workflows

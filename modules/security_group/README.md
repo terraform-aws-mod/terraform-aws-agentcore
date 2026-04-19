@@ -4,6 +4,28 @@
 
 Terraform module for creating least-privilege security groups for AWS Bedrock AgentCore.
 
+## Usage
+
+```hcl
+module "security_group" {
+  source = "../../modules/security_group"
+
+  security_group_name = "agentcore-sg"
+  vpc_id              = "vpc-xxx"
+
+  # Default: no ingress, egress to internet
+  egress_cidr_blocks = ["0.0.0.0/0"]
+
+  # Optional: Allow self-referencing traffic
+  ingress_with_self = true
+  egress_with_self  = true
+
+  tags = {
+    Environment = "production"
+  }
+}
+```
+
 ## Requirements
 
 | Name | Version |

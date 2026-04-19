@@ -1,0 +1,6 @@
+framework:
+  - terraform
+quiet: true
+compact: true
+skip-check:
+  - CKV2_AWS_5 # Security group is attached to aws_bedrockagentcore_agent_runtime, not EC2/ENI — Checkov does not recognize managed service attachments

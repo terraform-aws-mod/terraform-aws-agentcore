@@ -22,13 +22,13 @@ locals {
   predicted_ecr_repository_arn = format(
     "arn:%s:ecr:%s:%s:repository/%s",
     data.aws_partition.current.partition,
-    data.aws_region.current.region,
+    data.aws_region.current.name,
     local.effective_aws_account_id,
     local.effective_ecr_repository_name
   )
 
-  # Use predicted ARN when creating ECR repo, otherwise use wildcard (external/public images don't need specific ARN)
-  effective_ecr_repository_arn = var.create_ecr_repository ? local.predicted_ecr_repository_arn : "*"
+  # Use predicted ARN when creating ECR repo, otherwise null (no ECR pull policy needed for external images)
+  effective_ecr_repository_arn = var.create_ecr_repository ? local.predicted_ecr_repository_arn : null
 
   effective_iam_role_arn = var.create_iam_role ? module.iam[0].iam_role_arn : var.iam_role_arn
 

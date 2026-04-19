@@ -1,13 +1,12 @@
 # Purpose: Declare all root module inputs, defaults, and validation rules.
 
 ################################################################################
-# Core Variables
+# Required Variables
 ################################################################################
 
 variable "agent_runtime_name" {
   description = "Name of the Bedrock AgentCore runtime. Must start with a letter and contain only letters, numbers, and underscores (max 48 chars)."
   type        = string
-  default     = "agentcore_runtime"
 
   validation {
     condition     = can(regex("^[a-zA-Z][a-zA-Z0-9_]{0,47}$", var.agent_runtime_name))
@@ -18,7 +17,6 @@ variable "agent_runtime_name" {
 variable "container_image_uri" {
   description = "Full container image URI for the runtime artifact (typically ECR URI)."
   type        = string
-  default     = "public.ecr.aws/bedrock-agentcore/runtime:latest"
 
   validation {
     condition     = length(trim(var.container_image_uri, " ")) > 0
@@ -484,6 +482,78 @@ variable "ssm_parameter_arns" {
   description = "SSM Parameter Store ARNs to allow reading."
   type        = list(string)
   default     = []
+}
+
+################################################################################
+# Memory Configuration
+################################################################################
+
+variable "create_memory" {
+  description = "Whether to create a Bedrock AgentCore memory resource."
+  type        = bool
+  default     = false
+}
+
+variable "memory_name" {
+  description = "Name for the AgentCore memory. Defaults to agent_runtime_name when null."
+  type        = string
+  default     = null
+}
+
+variable "memory_description" {
+  description = "Description of the AgentCore memory."
+  type        = string
+  default     = null
+}
+
+variable "memory_event_expiry_duration" {
+  description = "Number of days after which memory events expire. Must be between 7 and 365."
+  type        = number
+  default     = 30
+
+  validation {
+    condition     = var.memory_event_expiry_duration >= 7 && var.memory_event_expiry_duration <= 365
+    error_message = "memory_event_expiry_duration must be between 7 and 365 days."
+  }
+}
+
+variable "memory_encryption_key_arn" {
+  description = "Existing KMS key ARN for memory encryption. If not provided, AWS managed encryption is used."
+  type        = string
+  default     = null
+}
+
+variable "memory_execution_role_arn" {
+  description = "ARN of the IAM role that the memory service assumes to perform operations."
+  type        = string
+  default     = null
+}
+
+variable "create_memory_kms_key" {
+  description = "Whether to create a dedicated KMS key for memory encryption."
+  type        = bool
+  default     = false
+}
+
+variable "memory_kms_key_deletion_window_days" {
+  description = "KMS key deletion window in days for memory encryption key."
+  type        = number
+  default     = 7
+}
+
+variable "memory_kms_key_enable_rotation" {
+  description = "Enable automatic rotation for the memory KMS key."
+  type        = bool
+  default     = true
+}
+
+variable "memory_timeouts" {
+  description = "Timeout configuration for memory resource operations."
+  type = object({
+    create = optional(string, "30m")
+    delete = optional(string, "30m")
+  })
+  default = null
 }
 
 ################################################################################
